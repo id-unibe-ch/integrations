@@ -1,0 +1,126 @@
+---
+description: Pipeline for parsing ExtremeNetworks VOSS logs
+processors:
+  - set:
+      field: ecs.version
+      value: '1.12.0'
+  - set:
+      field: event.ingested
+      value: "{{_ingest.timestamp}}"
+  - rename:
+      field: message
+      target_field: event.original
+      ignore_missing: true
+  - grok:
+      field: event.original
+      patterns:
+        - '<%{INT:log.syslog.priority}>%{INT:log.version} %{TIMESTAMP_ISO8601:syslog5424_ts} %{DATA:observer.name} %{DATA:log.logger} - %{BASE16NUM:log.msgid} - %{INT:log.value} %{WORD:log.origin.function} %{WORD:log.origin.file.name} %{WORD:log.level} (?:.*?(U|u)ser %{USER:user.name}.*?|.*?) (?:.*?on host %{IPV4:source.ip}|%{IPV6:source.ip}.*?|.*?)'
+  - remove:
+      field:
+        - log.syslog.priority
+        - log.version
+        - log.msgid
+        - log.value
+      ignore_missing: true
+  - rename:
+      field: "@timestamp"
+      target_field: "event.created"
+      ignore_missing: false
+  - date:
+      field: "syslog5424_ts"
+      formats: ["ISO8601", "UNIX"]
+  - append:
+      field: event.category
+      value: network
+  - set:
+      field: observer.vendor
+      value: ExtremeNetworks
+  - set:
+      field: observer.type
+      value: L3switch
+  - set:
+      field: observer.product
+      value: VOSS
+  - set:
+      field: source.ip
+      value:: "{{source.ip}}"
+      ignore_missing: true
+  - set:
+      field: destination.ip
+      value: "{{destination.ip}}"
+      ignore_missing: true
+  - set:
+      field: source.user.name
+      value: "{{source.user.name}}"
+      #if: ctx.source?.user?.name == null
+      ignore_missing: true
+  - append:
+      field: related.ip
+      value: "{{source.ip}}"
+      if: ctx.source?.ip != null
+  - append:
+      field: related.ip
+      value: "{{destination.ip}}"
+      if: ctx.destination?.ip != null
+  - set:
+      field: observer.name
+      value: "{{observer.name}}"
+      ignore_missing: true
+  #- set:
+  #    field: observer.origin_ip
+  #    value: observer.ip
+  #    ignore_missing: true
+  # IP of the hostname(observer.name) of the device sending syslogs
+  # This should be set in beats processor since the ES ingest processors does not have yet a dns/r-dns processor available.
+  # or for those cases where the Agent has enough resources, run the pipeline locally -> https://github.com/elastic/integrations/issues/2305
+  - rename:
+      field: checkpoint.message
+      target_field: message
+      ignore_missing: true
+  - append:
+      field: related.user
+      value: "{{source.user.name}}"
+      if: ctx.source?.user?.name != null
+  - append:
+      field: related.user
+      value: "{{destination.user.name}}"
+      if: ctx.destination?.user?.name != null
+  - geoip:
+      field: source.ip
+      target_field: source.geo
+      ignore_missing: true
+      if: ctx.source?.geo == null
+  - geoip:
+      field: destination.ip
+      target_field: destination.geo
+      ignore_missing: true
+      if: ctx.destination?.geo == null
+  - geoip:
+      database_file: GeoLite2-ASN.mmdb
+      field: source.ip
+      target_field: source.as
+      properties:
+        - asn
+        - organization_name
+      ignore_missing: true
+  - geoip:
+      database_file: GeoLite2-ASN.mmdb
+      field: destination.ip
+      target_field: destination.as
+      properties:
+        - asn
+        - organization_name
+      ignore_missing: true
+  - remove:
+      field:
+        - syslog5424_ts
+      ignore_missing: true
+  - remove:
+      field: event.original
+      if: "ctx?.tags == null || !(ctx.tags.contains('preserve_original_event'))"
+      ignore_failure: true
+      ignore_missing: true
+on_failure:
+  - set:
+      field: error.message
+      value: "{{ _ingest.on_failure_message }}" 

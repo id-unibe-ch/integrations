@@ -1,0 +1,14 @@
+<190>1 2021-11-11T15:22:21.985+01:00 Lg120-00-254-1 CP1 - 0x0003067a - 00000000 GlobalRouter SW INFO User mbuser18_cap forced log-out after cli session inactivity of 900 seconds.
+<190>1 2021-11-11T21:42:45.992+01:00 Lg120-00-254-1 CP1 - 0x0003061d - 00000000 GlobalRouter SW INFO Clock time has been set successfully. New time: Thu Nov 11 21:42:45 2021 CET, Previous time: Thu Nov 11 21:42:45 2021 CET, Initiated from 1.1.9.52
+<190>1 2021-11-11T15:22:22.006+01:00 Lg120-00-254-1 CP1 - 0x000d8602 - 00000000 GlobalRouter SSH INFO SSH session closed by user mbuser18_lowcase on host 1.1.254.50, session_id = 3
+<190>1 2021-11-11T15:22:22.006+01:00 Lg120-00-254-1 CP1 - 0x000d8602 - 00000000 GlobalRouter SSH INFO SSH CLI session end:  user mbuser18_lowcase on host 1.1.254.50, session_id = 3
+<190>1 2021-11-11T15:20:51.532+01:00 Fri51-00-161-73 CP1 - 0x0003061d - 00000000 GlobalRouter SW INFO Clock time has been set successfully. New time: Thu Nov 11 15:20:51 2021 CET, Previous time: Thu Nov 11 15:20:51 2021 CET, Initiated from 1.1.9.52
+<190>1 2021-11-11T15:07:18.913+01:00 Lg120-00-254-1 CP1 - 0x002c0600 - 00000000 GlobalRouter CLILOG INFO  2640 SSH:1.1.254.50 mbuser18 sh run | incl log
+<190>1 2021-11-11T15:05:54.457+01:00 Lg120-00-254-1 CP1 - 0x000a45ec - 00000000 GlobalRouter RADIUS INFO RADIUS authentication successful
+<190>1 2021-11-11T15:05:49.931+01:00 Lg120-00-254-1 CP1 - 0x000d8602 - 00000000 GlobalRouter SSH INFO SSH session closed by user mbuser18_lowcase on host 1.1.254.50, session_id = 2
+<190>1 2021-11-11T15:03:50.409+01:00 Lg120-00-254-1 CP1 - 0x000d8602 - 00000000 GlobalRouter SSH INFO SSH user authentication succeeded for user mbuser18_lowcase on host 1.1.254.50, session_id = 2
+<190>1 2021-11-11T15:03:46.195+01:00 Lg120-00-254-1 CP1 - 0x000d8602 - 00000000 GlobalRouter SSH INFO X509v3 host certificate is unavailable
+<190>1 2021-11-11T15:00:59.993+01:00 Mur24-01-213 CP1 - 0x0003061d - 00000000 GlobalRouter SW INFO Clock time has been set successfully. New time: Thu Nov 11 15:00:59 2021 CET, Previous time: Thu Nov 11 15:00:59 2021 CET, Initiated from 1.1.9.53
+<190>1 2021-11-24T11:27:35.857+01:00 Mur24-02-201 CP1 - 0x002c0600 - 000000001 GlobalRouter CLILOG INFO 41075 SSH:172.17.7.251 admin save config
+<187>1 2021-11-24T11:27:45.019+01:00 Mur24-01-213 CP1 - 0x000305d1 - 00000000 GlobalRouter SW ERROR No License file to save.
+<190>1 2021-11-24T11:27:47.411+01:00 Mur24-02-200 CP1 - 0x001b45d3 - 00000000 GlobalRouter TACACS INFO TACACS+ authentication successful

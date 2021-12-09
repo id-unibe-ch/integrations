@@ -1,0 +1,85 @@
+format_version: 1.0.0
+name: extremenetworks_voss
+title: ExtremeNetworks VOSS
+version: 0.0.1
+license: basic
+description: "This integration is for ExtremeNetworks VOSS product logs. It includes the following datasets for receiving logs over UDP syslog(rfc5424-format) or read from a file:"
+type: integration
+categories:
+  - network
+release: experimental
+conditions:
+  kibana.version: "^7.16.0"
+screenshots:
+  - src: /img/ExtremeNetworks.png
+    title: ExtremeNetworks
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/ExtremeNetworks-logo.svg
+    title: ExtremeNetworks logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: extremenetworks_voss
+    title: ExtremeNetworks VOSS logs
+    description: Collect logs from ExtremeNetworks syslog
+    inputs:
+      - type: logfile
+        title: "Collect ExtremeNetworks VOSS logs (input: logfile)"
+        description: "Collecting VOSS logs from ExtremeNetworks instances (input: logfile)"
+        vars:
+          - name: paths
+            type: text
+            title: Paths
+            multi: true
+            required: true
+            show_user: true
+          - name: internal_zones
+            type: text
+            title: Internal Zones
+            multi: true
+            required: false
+            show_user: false
+            default:
+              - trust
+          - name: external_zones
+            type: text
+            title: External Zones
+            multi: true
+            required: false
+            show_user: false
+            default:
+              - untrust
+      - type: udp
+        vars:
+          - name: syslog_host
+            type: text
+            title: Syslog Host
+            multi: false
+            required: true
+            show_user: true
+            default: localhost
+          - name: syslog_port
+            type: integer
+            title: Syslog Port
+            multi: false
+            required: true
+            show_user: true
+            default: 529
+          - name: internal_zones
+            type: text
+            title: Internal Zones
+            multi: true
+            required: false
+            show_user: false
+          - name: external_zones
+            type: text
+            title: External Zones
+            multi: true
+            required: false
+            show_user: false
+        title: "Collect ExtremeNetworks VOSS logs (input: udp)"
+        description: "Collecting VOSS logs from ExtremeNetworks instances (input: udp)"
+owner:
+  github: elastic/integrations
